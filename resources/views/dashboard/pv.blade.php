@@ -826,16 +826,50 @@
                     }
 
                     const latest = response.data;
+                    const isOffline = response.isOffline;
 
-                    updateMetric('voltage', Number(latest.voltage), 'V', 2);
-                    updateMetric('current', Number(latest.current), 'A', 2);
-                    updateMetric('lux', Number(latest.lux), 'Lux', 2);
-                    updateMetric('temperature', Number(latest.temperature), 'C', 2);
+                    // Update status badge
+                    const statusBadge = document.getElementById('statusBadge');
+                    if (isOffline) {
+                        statusBadge.classList.add('offline');
+                        statusBadge.innerHTML = '<span class="live-dot"></span><div><div>OFFLINE</div><div class="offline-text">Data tidak diperbarui</div></div>';
+                    } else {
+                        statusBadge.classList.remove('offline');
+                        statusBadge.innerHTML = '<span class="live-dot"></span>LIVE MONITORING';
+                    }
 
-                    updateChange('voltage', Number(latest.voltage_change_percent));
-                    updateChange('current', Number(latest.current_change_percent));
-                    updateChange('lux', Number(latest.lux_change_percent));
-                    updateChange('temperature', Number(latest.temperature_change_percent));
+                    // Update metrics based on offline status
+                    if (isOffline) {
+                        updateMetric('voltage', null, 'V', 2);
+                        updateMetric('current', null, 'A', 2);
+                        updateMetric('lux', null, 'Lux', 2);
+                        updateMetric('temperature', null, 'C', 2);
+
+                        updateChange('voltage', null);
+                        updateChange('current', null);
+                        updateChange('lux', null);
+                        updateChange('temperature', null);
+
+                        // Add offline class to stat cards
+                        document.querySelectorAll('.stat-card').forEach(card => {
+                            card.classList.add('offline');
+                        });
+                    } else {
+                        // Remove offline class from stat cards
+                        document.querySelectorAll('.stat-card').forEach(card => {
+                            card.classList.remove('offline');
+                        });
+
+                        updateMetric('voltage', Number(latest.voltage), 'V', 2);
+                        updateMetric('current', Number(latest.current), 'A', 2);
+                        updateMetric('lux', Number(latest.lux), 'Lux', 2);
+                        updateMetric('temperature', Number(latest.temperature), 'C', 2);
+
+                        updateChange('voltage', Number(latest.voltage_change_percent));
+                        updateChange('current', Number(latest.current_change_percent));
+                        updateChange('lux', Number(latest.lux_change_percent));
+                        updateChange('temperature', Number(latest.temperature_change_percent));
+                    }
                 });
         }
 

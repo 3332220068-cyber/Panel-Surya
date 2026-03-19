@@ -24,9 +24,12 @@ Route::prefix('pv')->group(function () {
     // Get latest PV data
     Route::get('/latest', function () {
         $latest = \App\Models\PvData::getLatest();
+        $isOffline = \App\Models\PvData::isOffline();
+        
         return response()->json([
             'success' => true,
             'data' => $latest,
+            'isOffline' => $isOffline,
         ]);
     });
 
