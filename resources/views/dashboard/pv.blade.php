@@ -421,7 +421,7 @@
                     <p class="stat-label">VOLTAGE</p>
                     <div class="icon-chip">V</div>
                 </div>
-                <p class="stat-value" id="metric-voltage">{{ $voltage !== null ? number_format($voltage, 1) : '--' }}<span class="unit">V</span></p>
+                <p class="stat-value" id="metric-voltage">{{ $voltage !== null ? number_format($voltage, 2) : '--' }}<span class="unit">V</span></p>
                 <span class="stat-change {{ $voltageChange > 0 ? 'positive' : ($voltageChange < 0 ? 'negative' : 'neutral') }}" id="change-voltage">
                     {{ $voltageChange !== null ? ($voltageChange >= 0 ? '↑ ' : '↓ ') . number_format(abs($voltageChange), 1) . '%' : '--' }}
                     <small>vs last hour</small>
@@ -433,7 +433,7 @@
                     <p class="stat-label">CURRENT</p>
                     <div class="icon-chip">A</div>
                 </div>
-                <p class="stat-value" id="metric-current">{{ $current !== null ? number_format($current, 1) : '--' }}<span class="unit">A</span></p>
+                <p class="stat-value" id="metric-current">{{ $current !== null ? number_format($current, 2) : '--' }}<span class="unit">A</span></p>
                 <span class="stat-change {{ $currentChange > 0 ? 'positive' : ($currentChange < 0 ? 'negative' : 'neutral') }}" id="change-current">
                     {{ $currentChange !== null ? ($currentChange >= 0 ? '↑ ' : '↓ ') . number_format(abs($currentChange), 1) . '%' : '--' }}
                     <small>vs last hour</small>
@@ -445,7 +445,7 @@
                     <p class="stat-label">LUX</p>
                     <div class="icon-chip">L</div>
                 </div>
-                <p class="stat-value" id="metric-lux">{{ $lux !== null ? number_format($lux, 0) : '--' }}<span class="unit">Lux</span></p>
+                <p class="stat-value" id="metric-lux">{{ $lux !== null ? number_format($lux, 2) : '--' }}<span class="unit">Lux</span></p>
                 <span class="stat-change {{ $luxChange > 0 ? 'positive' : ($luxChange < 0 ? 'negative' : 'neutral') }}" id="change-lux">
                     {{ $luxChange !== null ? ($luxChange >= 0 ? '↑ ' : '↓ ') . number_format(abs($luxChange), 1) . '%' : '--' }}
                     <small>vs last hour</small>
@@ -457,7 +457,7 @@
                     <p class="stat-label">TEMP</p>
                     <div class="icon-chip">T</div>
                 </div>
-                <p class="stat-value" id="metric-temperature">{{ $temperature !== null ? number_format($temperature, 1) : '--' }}<span class="unit">C</span></p>
+                <p class="stat-value" id="metric-temperature">{{ $temperature !== null ? number_format($temperature, 2) : '--' }}<span class="unit">C</span></p>
                 <span class="stat-change {{ $temperatureChange > 0 ? 'positive' : ($temperatureChange < 0 ? 'negative' : 'neutral') }}" id="change-temperature">
                     {{ $temperatureChange !== null ? ($temperatureChange >= 0 ? '↑ ' : '↓ ') . number_format(abs($temperatureChange), 1) . '%' : '--' }}
                     <small>vs last hour</small>
@@ -797,10 +797,10 @@
 
                     const latest = response.data;
 
-                    updateMetric('voltage', Number(latest.voltage), 'V');
-                    updateMetric('current', Number(latest.current), 'A');
-                    updateMetric('lux', Number(latest.lux), 'Lux', 0);
-                    updateMetric('temperature', Number(latest.temperature), 'C');
+                    updateMetric('voltage', Number(latest.voltage), 'V', 2);
+                    updateMetric('current', Number(latest.current), 'A', 2);
+                    updateMetric('lux', Number(latest.lux), 'Lux', 2);
+                    updateMetric('temperature', Number(latest.temperature), 'C', 2);
 
                     updateChange('voltage', Number(latest.voltage_change_percent));
                     updateChange('current', Number(latest.current_change_percent));
